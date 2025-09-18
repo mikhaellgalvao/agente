@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background: linear-gradient(to right, #2c3e50, #4a6c8e);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -34,7 +34,7 @@
         }
 
         .card-button {
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
             cursor: pointer;
         }
 
@@ -43,6 +43,25 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
+        .card-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Cores de texto ajustadas para o novo fundo */
+        .card-button h2, .card-button p {
+            color: white;
+        }
+
+        /* Estilo para o ícone de brilho */
+        .glow-icon {
+            filter: drop-shadow(0 0 5px #ffcc00);
+        }
+
+        /* Estilos para os checkboxes */
+        .quick-checkbox:checked + label {
+            color: #EF7E13;
+            font-weight: bold;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -60,21 +79,27 @@
 <body class="bg-gray-100">
 
     <!-- Container para os cartões principais, que se adaptam a diferentes telas -->
-    <div class="flex flex-col md:flex-row gap-8 w-full max-w-2xl">
-        <!-- Cartão de Agendamento -->
-        <div id="scheduleCard" class="card-button flex-1 bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
-            <h2 class="text-2xl font-bold text-galvao-green mb-2">Agendar Reunião</h2>
-            <p class="text-galvao-green">Defina data, horário e motivo.</p>
+    <div class="flex flex-col md:flex-row gap-8 w-full max-w-4xl">
+        <!-- Cartão de Agendamento de Reunião -->
+        <div id="scheduleCard" class="card-button flex-1 bg-galvao-green p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
+            <h2 class="text-2xl font-bold mb-2">Agendar Reunião</h2>
+            <p>Defina data, horário e motivo.</p>
+        </div>
+
+        <!-- Cartão de Agendamento de Tarefa (Novo) -->
+        <div id="taskCard" class="card-button flex-1 bg-galvao-green p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
+            <h2 class="text-2xl font-bold mb-2">Agendar Tarefa</h2>
+            <p>Marque uma nova tarefa a fazer.</p>
         </div>
 
         <!-- Cartão de Lembrete -->
-        <div id="reminderCard" class="card-button flex-1 bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
-            <h2 class="text-2xl font-bold text-galvao-green mb-2">Salvar Lembrete</h2>
-            <p class="text-galvao-green">Adicione um lembrete com prioridade.</p>
+        <div id="reminderCard" class="card-button flex-1 bg-galvao-green p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
+            <h2 class="text-2xl font-bold mb-2">Salvar Lembrete</h2>
+            <p>Adicione um lembrete com prioridade.</p>
         </div>
     </div>
 
-    <!-- Modal para Agendamentos -->
+    <!-- Modal para Agendamentos de Reunião -->
     <div id="scheduleModal" class="modal-overlay hidden">
         <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full transform transition-all duration-300">
             <div class="flex justify-end">
@@ -84,11 +109,10 @@
                     </svg>
                 </button>
             </div>
-            <h1 class="text-3xl font-bold text-galvao-green mb-6 text-center">Agente do Mikhaell</h1>
+            <h1 class="text-3xl font-bold text-galvao-green mb-6 text-center">Agendar Reunião</h1>
             <p class="text-galvao-green text-center mb-8">Preencha os dados e envie para o seu WhatsApp!</p>
 
             <form id="scheduleForm" class="space-y-6">
-
                 <!-- Campo Motivo -->
                 <div>
                     <label for="motivo" class="block text-sm font-medium text-galvao-green mb-1">Motivo da Reunião/Tarefa</label>
@@ -96,18 +120,52 @@
                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
-                <!-- Campo Data -->
+                <!-- Campo Data com Checkboxes de atalho -->
                 <div>
-                    <label for="data" class="block text-sm font-medium text-galvao-green mb-1">Dia</label>
+                    <label class="block text-sm font-medium text-galvao-green mb-1">Dia</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="scheduleToday" name="quick-date-schedule"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="scheduleToday" class="text-galvao-green font-medium">Hoje</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="scheduleTomorrow" name="quick-date-schedule"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="scheduleTomorrow" class="text-galvao-green font-medium">Amanhã</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="scheduleDayAfterTomorrow" name="quick-date-schedule"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="scheduleDayAfterTomorrow" class="text-galvao-green font-medium">Depois de amanhã</label>
+                        </div>
+                    </div>
                     <input type="date" id="data" name="data" required
-                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
-                <!-- Campo Horário -->
+                <!-- Campo Horário com Checkboxes de atalho -->
                 <div>
-                    <label for="horario" class="block text-sm font-medium text-galvao-green mb-1">Horário</label>
+                    <label class="block text-sm font-medium text-galvao-green mb-1">Horário</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="scheduleMorning" name="quick-time-schedule"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="scheduleMorning" class="text-galvao-green font-medium">Manhã</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="scheduleAfternoon" name="quick-time-schedule"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="scheduleAfternoon" class="text-galvao-green font-medium">Tarde</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="scheduleNight" name="quick-time-schedule"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="scheduleNight" class="text-galvao-green font-medium">Noite</label>
+                        </div>
+                    </div>
                     <input type="time" id="horario" name="horario" required
-                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Descrição -->
@@ -126,6 +184,92 @@
         </div>
     </div>
 
+    <!-- Modal para Agendamentos de Tarefa (Novo) -->
+    <div id="taskModal" class="modal-overlay hidden">
+        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full transform transition-all duration-300">
+            <div class="flex justify-end">
+                <button id="closeTaskModal" class="text-gray-400 hover:text-gray-600 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <h1 class="text-3xl font-bold text-galvao-green mb-6 text-center">Agendar Tarefa</h1>
+            <p class="text-galvao-green text-center mb-8">Preencha os detalhes da sua tarefa.</p>
+
+            <form id="taskForm" class="space-y-6">
+                <!-- Campo Título da Tarefa -->
+                <div>
+                    <label for="taskTitle" class="block text-sm font-medium text-galvao-green mb-1">Título da Tarefa</label>
+                    <input type="text" id="taskTitle" name="taskTitle" required
+                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+                
+                <!-- Campo Data com Checkboxes de atalho -->
+                <div>
+                    <label class="block text-sm font-medium text-galvao-green mb-1">Dia</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="taskToday" name="quick-date-task"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="taskToday" class="text-galvao-green font-medium">Hoje</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="taskTomorrow" name="quick-date-task"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="taskTomorrow" class="text-galvao-green font-medium">Amanhã</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="taskDayAfterTomorrow" name="quick-date-task"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="taskDayAfterTomorrow" class="text-galvao-green font-medium">Depois de amanhã</label>
+                        </div>
+                    </div>
+                    <input type="date" id="taskDate" name="taskDate"
+                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+
+                <!-- Campo Horário com Checkboxes de atalho -->
+                <div>
+                    <label class="block text-sm font-medium text-galvao-green mb-1">Horário</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="taskMorning" name="quick-time-task"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="taskMorning" class="text-galvao-green font-medium">Manhã</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="taskAfternoon" name="quick-time-task"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="taskAfternoon" class="text-galvao-green font-medium">Tarde</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="taskNight" name="quick-time-task"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="taskNight" class="text-galvao-green font-medium">Noite</label>
+                        </div>
+                    </div>
+                    <input type="time" id="taskTime" name="taskTime"
+                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+
+                <!-- Campo Descrição da Tarefa -->
+                <div>
+                    <label for="taskDescription" class="block text-sm font-medium text-galvao-green mb-1">Descrição Detalhada</label>
+                    <textarea id="taskDescription" name="taskDescription" rows="4" required
+                              class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
+                </div>
+
+                <!-- Botão de Envio para Tarefas -->
+                <button type="submit"
+                        class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
+                    Salvar Tarefa
+                </button>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Modal para Lembretes -->
     <div id="reminderModal" class="modal-overlay hidden">
         <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full transform transition-all duration-300">
@@ -140,6 +284,54 @@
             <p class="text-galvao-green text-center mb-8">Adicione um lembrete com prioridade.</p>
 
             <form id="reminderForm" class="space-y-6">
+
+                <!-- Campo Data com Checkboxes de atalho -->
+                <div>
+                    <label class="block text-sm font-medium text-galvao-green mb-1">Dia</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="reminderToday" name="quick-date-reminder"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="reminderToday" class="text-galvao-green font-medium">Hoje</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="reminderTomorrow" name="quick-date-reminder"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="reminderTomorrow" class="text-galvao-green font-medium">Amanhã</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="reminderDayAfterTomorrow" name="quick-date-reminder"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="reminderDayAfterTomorrow" class="text-galvao-green font-medium">Depois de amanhã</label>
+                        </div>
+                    </div>
+                    <input type="date" id="reminderDate" name="reminderDate"
+                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+
+                <!-- Campo Horário com Checkboxes de atalho -->
+                <div>
+                    <label class="block text-sm font-medium text-galvao-green mb-1">Horário</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="reminderMorning" name="quick-time-reminder"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="reminderMorning" class="text-galvao-green font-medium">Manhã</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="reminderAfternoon" name="quick-time-reminder"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="reminderAfternoon" class="text-galvao-green font-medium">Tarde</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="reminderNight" name="quick-time-reminder"
+                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                            <label for="reminderNight" class="text-galvao-green font-medium">Noite</label>
+                        </div>
+                    </div>
+                    <input type="time" id="reminderTime" name="reminderTime"
+                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
 
                 <!-- Campo Lembrete -->
                 <div>
@@ -171,19 +363,25 @@
     <script>
         // Obtém os elementos dos modais
         const scheduleModal = document.getElementById('scheduleModal');
+        const taskModal = document.getElementById('taskModal');
         const reminderModal = document.getElementById('reminderModal');
 
         // Obtém os elementos dos cartões
         const scheduleCard = document.getElementById('scheduleCard');
+        const taskCard = document.getElementById('taskCard');
         const reminderCard = document.getElementById('reminderCard');
 
         // Obtém os botões de fechar
         const closeScheduleModal = document.getElementById('closeScheduleModal');
+        const closeTaskModal = document.getElementById('closeTaskModal');
         const closeReminderModal = document.getElementById('closeReminderModal');
 
         // Adiciona event listeners para mostrar os modais
         scheduleCard.addEventListener('click', () => {
             scheduleModal.classList.remove('hidden');
+        });
+        taskCard.addEventListener('click', () => {
+            taskModal.classList.remove('hidden');
         });
         reminderCard.addEventListener('click', () => {
             reminderModal.classList.remove('hidden');
@@ -193,6 +391,9 @@
         closeScheduleModal.addEventListener('click', () => {
             scheduleModal.classList.add('hidden');
         });
+        closeTaskModal.addEventListener('click', () => {
+            taskModal.classList.add('hidden');
+        });
         closeReminderModal.addEventListener('click', () => {
             reminderModal.classList.add('hidden');
         });
@@ -201,6 +402,11 @@
         scheduleModal.addEventListener('click', (event) => {
             if (event.target === scheduleModal) {
                 scheduleModal.classList.add('hidden');
+            }
+        });
+        taskModal.addEventListener('click', (event) => {
+            if (event.target === taskModal) {
+                taskModal.classList.add('hidden');
             }
         });
         reminderModal.addEventListener('click', (event) => {
@@ -228,21 +434,112 @@
             window.open(whatsappUrl, '_blank');
         });
 
+        // Lógica de envio do formulário de agendamento de tarefa
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const taskTitle = document.getElementById('taskTitle').value;
+            const taskDate = document.getElementById('taskDate').value;
+            const taskTime = document.getElementById('taskTime').value;
+            const taskDescription = document.getElementById('taskDescription').value;
+            const message = `
+*Tarefa Agendada*
+📌 *Título:* ${taskTitle}
+📅 *Prazo:* ${taskDate}
+⏰ *Horário:* ${taskTime}
+📝 *Descrição:* ${taskDescription}
+            `.trim();
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/5562981080384?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
         // Lógica de envio do formulário de lembrete
         document.getElementById('reminderForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const lembrete = document.getElementById('lembrete').value;
             const prioridade = document.getElementById('prioridade').value;
+            const reminderDate = document.getElementById('reminderDate').value;
+            const reminderTime = document.getElementById('reminderTime').value;
             const message = `
 *Lembrete Importante*
 🔔 *Prioridade:* ${prioridade}
+📅 *Dia:* ${reminderDate}
+⏰ *Horário:* ${reminderTime}
 📝 *Lembrete:* ${lembrete}
             `.trim();
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/5562981080384?text=${encodedMessage}`;
             window.open(whatsappUrl, '_blank');
         });
-    </script>
+        
+        // --- Lógica de Data e Horário Rápido para todos os cards ---
 
+        function getFormattedDate(offset) {
+            const date = new Date();
+            date.setDate(date.getDate() + offset);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function setupQuickSelectors(dateCheckboxes, timeCheckboxes, dateInput, timeInput) {
+            dateCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        dateCheckboxes.forEach(c => c !== e.target ? c.checked = false : null);
+                        if (e.target.id.includes('Today')) {
+                            dateInput.value = getFormattedDate(0);
+                        } else if (e.target.id.includes('Tomorrow')) {
+                            dateInput.value = getFormattedDate(1);
+                        } else if (e.target.id.includes('DayAfterTomorrow')) {
+                            dateInput.value = getFormattedDate(2);
+                        }
+                    } else if (![...dateCheckboxes].some(c => c.checked)) {
+                        dateInput.value = '';
+                    }
+                });
+            });
+
+            timeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        timeCheckboxes.forEach(c => c !== e.target ? c.checked = false : null);
+                        if (e.target.id.includes('Morning')) {
+                            timeInput.value = '09:00';
+                        } else if (e.target.id.includes('Afternoon')) {
+                            timeInput.value = '14:00';
+                        } else if (e.target.id.includes('Night')) {
+                            timeInput.value = '19:00';
+                        }
+                    } else if (![...timeCheckboxes].some(c => c.checked)) {
+                        timeInput.value = '';
+                    }
+                });
+            });
+        }
+        
+        // Configurar para o Agendar Reunião
+        const scheduleDateCheckboxes = document.querySelectorAll('input[name="quick-date-schedule"]');
+        const scheduleTimeCheckboxes = document.querySelectorAll('input[name="quick-time-schedule"]');
+        const scheduleDateInput = document.getElementById('data');
+        const scheduleTimeInput = document.getElementById('horario');
+        setupQuickSelectors(scheduleDateCheckboxes, scheduleTimeCheckboxes, scheduleDateInput, scheduleTimeInput);
+
+        // Configurar para o Agendar Tarefa
+        const taskDateCheckboxes = document.querySelectorAll('input[name="quick-date-task"]');
+        const taskTimeCheckboxes = document.querySelectorAll('input[name="quick-time-task"]');
+        const taskDateInput = document.getElementById('taskDate');
+        const taskTimeInput = document.getElementById('taskTime');
+        setupQuickSelectors(taskDateCheckboxes, taskTimeCheckboxes, taskDateInput, taskTimeInput);
+
+        // Configurar para o Lembrete
+        const reminderDateCheckboxes = document.querySelectorAll('input[name="quick-date-reminder"]');
+        const reminderTimeCheckboxes = document.querySelectorAll('input[name="quick-time-reminder"]');
+        const reminderDateInput = document.getElementById('reminderDate');
+        const reminderTimeInput = document.getElementById('reminderTime');
+        setupQuickSelectors(reminderDateCheckboxes, reminderTimeCheckboxes, reminderDateInput, reminderTimeInput);
+
+    </script>
 </body>
 </html>
