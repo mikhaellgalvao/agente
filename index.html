@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agente do Mikhaell</title>
-    <!-- Tailwind CSS CDN with custom colors -->
+    <!-- Adiciona o favicon SVG usando as cores da marca -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230E5847'/%3E%3Cpath d='M65,35 c-10,0 -15,5 -15,10 c0,5 5,10 15,10 c-10,0 -15,5 -15,10 c0,5 5,10 15,10' stroke='%23EF7E13' stroke-width='10' fill='none' stroke-linecap='round' transform='rotate(180 50 50)'/%3E%3C/svg%3E">
+    <!-- Tailwind CSS CDN com cores personalizadas -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -117,7 +119,7 @@
                 <div>
                     <label for="motivo" class="block text-sm font-medium text-galvao-green mb-1">Motivo da Reunião/Tarefa</label>
                     <input type="text" id="motivo" name="motivo" required
-                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Data com Checkboxes de atalho -->
@@ -126,22 +128,22 @@
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="scheduleToday" name="quick-date-schedule"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="scheduleToday" class="text-galvao-green font-medium">Hoje</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="scheduleTomorrow" name="quick-date-schedule"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="scheduleTomorrow" class="text-galvao-green font-medium">Amanhã</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="scheduleDayAfterTomorrow" name="quick-date-schedule"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="scheduleDayAfterTomorrow" class="text-galvao-green font-medium">Depois de amanhã</label>
                         </div>
                     </div>
                     <input type="date" id="data" name="data" required
-                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Horário com Checkboxes de atalho -->
@@ -150,34 +152,34 @@
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="scheduleMorning" name="quick-time-schedule"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="scheduleMorning" class="text-galvao-green font-medium">Manhã</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="scheduleAfternoon" name="quick-time-schedule"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="scheduleAfternoon" class="text-galvao-green font-medium">Tarde</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="scheduleNight" name="quick-time-schedule"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="scheduleNight" class="text-galvao-green font-medium">Noite</label>
                         </div>
                     </div>
                     <input type="time" id="horario" name="horario" required
-                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Descrição -->
                 <div>
                     <label for="descricao" class="block text-sm font-medium text-galvao-green mb-1">Descrição Detalhada</label>
                     <textarea id="descricao" name="descricao" rows="4" required
-                              class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
+                                 class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
                 </div>
 
                 <!-- Botão de Envio -->
                 <button type="submit"
-                        class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
+                         class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
                     Enviar Agendamento
                 </button>
             </form>
@@ -202,7 +204,7 @@
                 <div>
                     <label for="taskTitle" class="block text-sm font-medium text-galvao-green mb-1">Título da Tarefa</label>
                     <input type="text" id="taskTitle" name="taskTitle" required
-                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
                 
                 <!-- Campo Data com Checkboxes de atalho -->
@@ -211,22 +213,22 @@
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="taskToday" name="quick-date-task"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="taskToday" class="text-galvao-green font-medium">Hoje</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="taskTomorrow" name="quick-date-task"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="taskTomorrow" class="text-galvao-green font-medium">Amanhã</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="taskDayAfterTomorrow" name="quick-date-task"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="taskDayAfterTomorrow" class="text-galvao-green font-medium">Depois de amanhã</label>
                         </div>
                     </div>
                     <input type="date" id="taskDate" name="taskDate"
-                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Horário com Checkboxes de atalho -->
@@ -235,34 +237,34 @@
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="taskMorning" name="quick-time-task"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="taskMorning" class="text-galvao-green font-medium">Manhã</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="taskAfternoon" name="quick-time-task"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="taskAfternoon" class="text-galvao-green font-medium">Tarde</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="taskNight" name="quick-time-task"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="taskNight" class="text-galvao-green font-medium">Noite</label>
                         </div>
                     </div>
                     <input type="time" id="taskTime" name="taskTime"
-                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Descrição da Tarefa -->
                 <div>
                     <label for="taskDescription" class="block text-sm font-medium text-galvao-green mb-1">Descrição Detalhada</label>
                     <textarea id="taskDescription" name="taskDescription" rows="4" required
-                              class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
+                                  class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
                 </div>
 
                 <!-- Botão de Envio para Tarefas -->
                 <button type="submit"
-                        class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
+                         class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
                     Salvar Tarefa
                 </button>
             </form>
@@ -291,22 +293,22 @@
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="reminderToday" name="quick-date-reminder"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="reminderToday" class="text-galvao-green font-medium">Hoje</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="reminderTomorrow" name="quick-date-reminder"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="reminderTomorrow" class="text-galvao-green font-medium">Amanhã</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="reminderDayAfterTomorrow" name="quick-date-reminder"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="reminderDayAfterTomorrow" class="text-galvao-green font-medium">Depois de amanhã</label>
                         </div>
                     </div>
                     <input type="date" id="reminderDate" name="reminderDate"
-                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Horário com Checkboxes de atalho -->
@@ -315,36 +317,36 @@
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="reminderMorning" name="quick-time-reminder"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="reminderMorning" class="text-galvao-green font-medium">Manhã</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="reminderAfternoon" name="quick-time-reminder"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="reminderAfternoon" class="text-galvao-green font-medium">Tarde</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" id="reminderNight" name="quick-time-reminder"
-                                   class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
+                                    class="quick-checkbox form-checkbox h-5 w-5 text-galvao-orange rounded focus:ring-galvao-orange">
                             <label for="reminderNight" class="text-galvao-green font-medium">Noite</label>
                         </div>
                     </div>
                     <input type="time" id="reminderTime" name="reminderTime"
-                           class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                            class="mt-4 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                 </div>
 
                 <!-- Campo Lembrete -->
                 <div>
                     <label for="lembrete" class="block text-sm font-medium text-galvao-green mb-1">Lembrete</label>
                     <textarea id="lembrete" name="lembrete" rows="4" required
-                              class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
+                                  class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
                 </div>
 
                 <!-- Campo Prioridade -->
                 <div>
                     <label for="prioridade" class="block text-sm font-medium text-galvao-green mb-1">Prioridade</label>
                     <select id="prioridade" name="prioridade" required
-                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                             class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
                         <option value="Família">Família</option>
                         <option value="Trabalho">Trabalho</option>
                         <option value="Pessoal">Pessoal</option>
@@ -353,7 +355,7 @@
 
                 <!-- Botão de Envio para Lembretes -->
                 <button type="submit"
-                        class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
+                         class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
                     Salvar Lembrete
                 </button>
             </form>
