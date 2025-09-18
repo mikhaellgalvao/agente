@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente do Mikhaell</title>
+    <!-- Tailwind CSS CDN with custom colors -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .card-button {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'galvao-orange': '#EF7E13',
+                        'galvao-green': '#0E5847',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Container para os cartões principais, que se adaptam a diferentes telas -->
+    <div class="flex flex-col md:flex-row gap-8 w-full max-w-2xl">
+        <!-- Cartão de Agendamento -->
+        <div id="scheduleCard" class="card-button flex-1 bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
+            <h2 class="text-2xl font-bold text-galvao-green mb-2">Agendar Reunião</h2>
+            <p class="text-galvao-green">Defina data, horário e motivo.</p>
+        </div>
+
+        <!-- Cartão de Lembrete -->
+        <div id="reminderCard" class="card-button flex-1 bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center">
+            <h2 class="text-2xl font-bold text-galvao-green mb-2">Salvar Lembrete</h2>
+            <p class="text-galvao-green">Adicione um lembrete com prioridade.</p>
+        </div>
+    </div>
+
+    <!-- Modal para Agendamentos -->
+    <div id="scheduleModal" class="modal-overlay hidden">
+        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full transform transition-all duration-300">
+            <div class="flex justify-end">
+                <button id="closeScheduleModal" class="text-gray-400 hover:text-gray-600 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <h1 class="text-3xl font-bold text-galvao-green mb-6 text-center">Agente do Mikhaell</h1>
+            <p class="text-galvao-green text-center mb-8">Preencha os dados e envie para o seu WhatsApp!</p>
+
+            <form id="scheduleForm" class="space-y-6">
+
+                <!-- Campo Motivo -->
+                <div>
+                    <label for="motivo" class="block text-sm font-medium text-galvao-green mb-1">Motivo da Reunião/Tarefa</label>
+                    <input type="text" id="motivo" name="motivo" required
+                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+
+                <!-- Campo Data -->
+                <div>
+                    <label for="data" class="block text-sm font-medium text-galvao-green mb-1">Dia</label>
+                    <input type="date" id="data" name="data" required
+                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+
+                <!-- Campo Horário -->
+                <div>
+                    <label for="horario" class="block text-sm font-medium text-galvao-green mb-1">Horário</label>
+                    <input type="time" id="horario" name="horario" required
+                           class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                </div>
+
+                <!-- Campo Descrição -->
+                <div>
+                    <label for="descricao" class="block text-sm font-medium text-galvao-green mb-1">Descrição Detalhada</label>
+                    <textarea id="descricao" name="descricao" rows="4" required
+                              class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
+                </div>
+
+                <!-- Botão de Envio -->
+                <button type="submit"
+                        class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
+                    Enviar Agendamento
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Lembretes -->
+    <div id="reminderModal" class="modal-overlay hidden">
+        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full transform transition-all duration-300">
+            <div class="flex justify-end">
+                <button id="closeReminderModal" class="text-gray-400 hover:text-gray-600 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <h2 class="text-2xl font-bold text-galvao-green mb-4 text-center">Lembretes Importantes</h2>
+            <p class="text-galvao-green text-center mb-8">Adicione um lembrete com prioridade.</p>
+
+            <form id="reminderForm" class="space-y-6">
+
+                <!-- Campo Lembrete -->
+                <div>
+                    <label for="lembrete" class="block text-sm font-medium text-galvao-green mb-1">Lembrete</label>
+                    <textarea id="lembrete" name="lembrete" rows="4" required
+                              class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200"></textarea>
+                </div>
+
+                <!-- Campo Prioridade -->
+                <div>
+                    <label for="prioridade" class="block text-sm font-medium text-galvao-green mb-1">Prioridade</label>
+                    <select id="prioridade" name="prioridade" required
+                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-galvao-orange focus:border-galvao-orange transition duration-200">
+                        <option value="Família">Família</option>
+                        <option value="Trabalho">Trabalho</option>
+                        <option value="Pessoal">Pessoal</option>
+                    </select>
+                </div>
+
+                <!-- Botão de Envio para Lembretes -->
+                <button type="submit"
+                        class="w-full py-3 px-4 rounded-lg text-white font-semibold shadow-lg bg-galvao-orange hover:brightness-110 focus:ring-2 focus:ring-galvao-orange focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105">
+                    Salvar Lembrete
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Obtém os elementos dos modais
+        const scheduleModal = document.getElementById('scheduleModal');
+        const reminderModal = document.getElementById('reminderModal');
+
+        // Obtém os elementos dos cartões
+        const scheduleCard = document.getElementById('scheduleCard');
+        const reminderCard = document.getElementById('reminderCard');
+
+        // Obtém os botões de fechar
+        const closeScheduleModal = document.getElementById('closeScheduleModal');
+        const closeReminderModal = document.getElementById('closeReminderModal');
+
+        // Adiciona event listeners para mostrar os modais
+        scheduleCard.addEventListener('click', () => {
+            scheduleModal.classList.remove('hidden');
+        });
+        reminderCard.addEventListener('click', () => {
+            reminderModal.classList.remove('hidden');
+        });
+
+        // Adiciona event listeners para fechar os modais
+        closeScheduleModal.addEventListener('click', () => {
+            scheduleModal.classList.add('hidden');
+        });
+        closeReminderModal.addEventListener('click', () => {
+            reminderModal.classList.add('hidden');
+        });
+
+        // Adiciona event listener para fechar o modal clicando fora dele
+        scheduleModal.addEventListener('click', (event) => {
+            if (event.target === scheduleModal) {
+                scheduleModal.classList.add('hidden');
+            }
+        });
+        reminderModal.addEventListener('click', (event) => {
+            if (event.target === reminderModal) {
+                reminderModal.classList.add('hidden');
+            }
+        });
+
+        // Lógica de envio do formulário de agendamento
+        document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const motivo = document.getElementById('motivo').value;
+            const data = document.getElementById('data').value;
+            const horario = document.getElementById('horario').value;
+            const descricao = document.getElementById('descricao').value;
+            const message = `
+*Agendamento Pessoal*
+🗓️ *Motivo:* ${motivo}
+📅 *Dia:* ${data}
+⏰ *Horário:* ${horario}
+📝 *Descrição:* ${descricao}
+            `.trim();
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/5562981080384?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Lógica de envio do formulário de lembrete
+        document.getElementById('reminderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const lembrete = document.getElementById('lembrete').value;
+            const prioridade = document.getElementById('prioridade').value;
+            const message = `
+*Lembrete Importante*
+🔔 *Prioridade:* ${prioridade}
+📝 *Lembrete:* ${lembrete}
+            `.trim();
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/5562981080384?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+    </script>
+
+</body>
+</html>
